@@ -34,7 +34,7 @@ public class Movie implements Comparable<Movie>{
         }
         this.title = title;
         this.year = year;
-        this.direction = director;
+        this.director = director;
         this.writer = writer;
         this.actor1 = actor1;
         this.actor2 = actor2;
@@ -47,5 +47,17 @@ public class Movie implements Comparable<Movie>{
         }
         this.loc=loc;
         //add given location to the list of filming locations for the current movie object
+    }
+
+    public String toString() {
+        return "";
+
+    }
+
+    public Boolean equals(Movie movie) {
+        if (this.yearOfRealease == movie.yearOfRealease && this.title == movie.title) {
+            return true;
+        }
+        return false;
     }
 }

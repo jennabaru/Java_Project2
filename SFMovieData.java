@@ -11,6 +11,9 @@ public class SFMovieData{
             System.err.println("Usage Error: The name of a file is expected as the argument");
             System.exit(1);
         }
+
+        // Create a new MovieList to store all the Movies from the CSV file
+        MovieList movieDB = new MovieList();
         
         try {
 
@@ -23,28 +26,39 @@ public class SFMovieData{
             ArrayList<String> csvMovies = null; 
 
             while (movies.hasNextLine()) {
-                String movie = movies.nextLine();
-                csvMovies = splitCSVLine(movie);
+                String movieString = movies.nextLine();
+                csvMovie = splitCSVLine(movieString);
 
-                if (csvMovies == null){
+          
+                if (csvMovie == null){
                     System.err.println("Error: movie database is empty");
                     System.exit(1);
                 }
 
+                // DEBUG - REMOVE LATER
                 // System.out.printf("read: %s\n", movie);
-                System.out.printf("The Title is %s\n", csvMovies.get(0));
+                //System.out.printf("The Title is %s\n", csvMovies.get(0));
 
                 // for each CSV line we need to:
                 // See if there is already a Movie in the MovieList class that has the same title and year via compariable interface
                 // If so, use the addLocation method to add the location.
                 // Otherwise, create a Movie object and add it to the MovieList
 
+                // create a movie 
+                Movie movie = new Movie(csvMovie.get(0),csvMovie.get(1));
+                Movie existingMovie = movieDB.find(movie);
+                
+                if (existingMovie == null) {
+                    // Use the full constuctor to create a movie and add it to the MovieList
+                    
+                } else {
+                    // add the location
+                    existingMovie.addLocation(csvMovie.get(2));
+                }
+
                 
 
-                if (csvMovies == null){
-                        System.err.println("Error: movie database is empty");
-                        System.exit(1);
-                }
+                
             }
     } catch(FileNotFoundException e) {
         System.err.println("Error: the file "+movieFile.getAbsolutePath()+" does not exist.\n");
