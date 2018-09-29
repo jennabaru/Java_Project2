@@ -1,9 +1,11 @@
 package project2;
 
+import java.util.ArrayList;
+
 public class Movie implements Comparable<Movie>{
     String title;
-    int yearOfRealease;
-    //list of sf locations
+    int year;
+    ArrayList<Location> location = new ArrayList<Location>();
     String director;
     String writer;
     Actor actor1;
@@ -45,7 +47,7 @@ public class Movie implements Comparable<Movie>{
         if (loc == null){
             throw new IllegalArgumentException("Invalid location");
         }
-        this.loc=loc;
+        this.location.add(loc);
         //add given location to the list of filming locations for the current movie object
     }
 
@@ -55,9 +57,13 @@ public class Movie implements Comparable<Movie>{
     }
 
     public Boolean equals(Movie movie) {
-        if (this.yearOfRealease == movie.yearOfRealease && this.title == movie.title) {
+        if (this.year == movie.year && this.title == movie.title) {
             return true;
         }
         return false;
+    }
+
+    public int compareTo(Movie movie) {
+        return 0;
     }
 }

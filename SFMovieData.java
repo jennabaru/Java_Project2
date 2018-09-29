@@ -1,12 +1,17 @@
 package project2;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;   
+import java.util.Arrays;
 
 public class SFMovieData{
 
     public static void main(String[] args){
+
+        File movieFile = null;
+
         if (args.length == 0){
             System.err.println("Usage Error: The name of a file is expected as the argument");
             System.exit(1);
@@ -17,13 +22,13 @@ public class SFMovieData{
         
         try {
 
-            File movieFile = new File(args[0]);
-            movies = new Scanner (movieFile);
+            movieFile = new File(args[0]);
+            Scanner movies = new Scanner(movieFile);
 
             // Skip past the headers in the CSV file
             movies.nextLine();
             
-            ArrayList<String> csvMovies = null; 
+            ArrayList<String> csvMovie = null; 
 
             while (movies.hasNextLine()) {
                 String movieString = movies.nextLine();
@@ -45,32 +50,50 @@ public class SFMovieData{
                 // Otherwise, create a Movie object and add it to the MovieList
 
                 // create a movie 
-                Movie movie = new Movie(csvMovie.get(0),csvMovie.get(1));
+                if (csvMovie.size() < 9) {
+                    System.out.printf("Bad CSV Entry, skipping\n");
+                    continue;
+                }
+
+                Movie movie = new Movie(csvMovie.get(0), Integer.parseInt(csvMovie.get(1)));
                 Movie existingMovie = movieDB.find(movie);
+                
+                Actor actor1 = null;
+                Actor actor2 = null;
+                Actor actor3 = null;
+
                 
                 if (existingMovie == null) {
                     // Use the full constuctor to create a movie and add it to the MovieList
-                    if (csvMovie.get(8)!= null || csvMovie.get(8)!=""){
-                        Actor actor1 = new Actor(csvMovie.get(8));
+                    if (csvMovie.size() >= 9 && csvMovie.get(8).length() > 0){
+                        actor1 = new Actor(csvMovie.get(8));
                     }
-                    if (csvMovie.get(9)!= null || csvMovie.get(9)!=""){
-                        Actor actor2 = new Actor(csvMovie.get(9));
+                    if (csvMovie.size() >= 10  && csvMovie.get(9).length() > 0 ){
+                        actor2 = new Actor(csvMovie.get(9));
                     }
-                    if (csvMovie.get(10)!= null || csvMovie.get(10)!=""){
-                        Actor actor3 = new Actor(csvMovie.get(10));
+                    
+                    if (csvMovie.size() >= 11 && csvMovie.get(10).length() > 0) {
+                        actor3 = new Actor(csvMovie.get(10));
                     }
-                    Movie newMovie =  new Movie(csvMovie.get(0), csvMovie.get(1), csvMovie.get(6), csvMovie.get(7), 
-                    actor1, actor2, actor3);
 
-                    if(csvMovie.get(2)!= null || csvMovie.get(2)!= ""){
-                        newMovie.addLocation(csvMovie.get(2));
+                    // If the first actor is blank, skip addig the movie
+                    if (actor1 != null) {
+                        Movie newMovie =  new Movie(csvMovie.get(0), Integer.parseInt(csvMovie.get(1)), csvMovie.get(6), csvMovie.get(7), 
+                            actor1, actor2, actor3);
+
+                        if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
+                            Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
+                        
+                            newMovie.addLocation(loc);
+                        }
+                        //add new movie object into movie list array
+                        movieDB.add(newMovie);
                     }
-                    //add new movie object into movie list array
-                    movieDB.append(newMovie);
                 } else {
                     // add the location
                     if(csvMovie.get(2)!= null || csvMovie.get(2)!= ""){
-                        existingMovie.addLocation(csvMovie.get(2));
+                        Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
+                        existingMovie.addLocation(loc);
                     }
                 }
                 
@@ -80,14 +103,83 @@ public class SFMovieData{
 		System.exit(1);
     }  
         
+    // DEBUG
+    System.out.printf("There are %d entries in the database\n", movieDB.size());
+
     // Start the Console Program and loop until the user quits
     Boolean userQuit = false;
     welcomeBanner();
 
     while(!userQuit){
+       Scanner cmdScanner = new Scanner (System.in);
+       
+       System.out.println("Enter your search query: ");
 
+       while(cmdScanner.hasNextLine()){
+           String cmd[] = cmdScanner.nextLine().trim().split(" ");
+           if(cmd.length == 0 || (cmd.length==1 && !cmd[0].equalsIgnoreCase("quit"))){
+               System.err.println("Usage Error: program expects title keyword, actor keyword, or quit");
+               break;
+
+           } else if (cmd[0].equalsIgnoreCase("title")) {
+                //SEARCH FOR TITLE KEYWORD
+                // DEBUG System.out.println("Searching title");
+                
+                String keywords = "";
+                int i = 0;
+                for(i=1; i<cmd.length; i++) {
+                    keywords = keywords.concat(cmd[i]);
+                    keywords = keywords.concat(" ");
+                } 
+                keywords = keywords.trim();
+                
+                System.out.printf("DEBUG searching title with [%s]\n", keywords);
+
+                MovieList titleResults = movieDB.getMatchingTitles(keywords);
+
+                if (titleResults.size() > 0) {
+                    System.out.printf("Found %d results\n", titleResults.size());
+                    
+                } else {
+                    System.out.println("No results, try again");
+                }
+
+                System.out.println("Enter your search query: ");
+
+           } else if (cmd[0].equalsIgnoreCase("actor")) {  
+                //search for actor keyword
+                // DEBUG System.out.println("Searching actor"); 
+
+
+                String keywords = "";
+                int i = 0;
+                for(i=1; i<cmd.length; i++) {
+                    keywords = keywords.concat(cmd[i]);
+                    keywords = keywords.concat(" ");
+                } 
+                keywords = keywords.trim();
+
+
+                System.out.printf("DEBUG searching actor with [%s]\n", keywords);
+
+                MovieList actorResults = movieDB.getMatchingActor(keywords);
+                if (actorResults.size() > 0) {
+                    System.out.printf("Found %d results\n", actorResults.size());
+
+                } else {
+                    System.out.println("No results, try again");
+                }
+
+                System.out.println("Enter your search query: ");
+
+           } else {
+               if (cmd[0].equalsIgnoreCase("quit")){
+                   userQuit=true;
+                   break;
+               }
+           }
+       }
     }
-
 }
 
     public static void welcomeBanner(){
@@ -96,6 +188,8 @@ public class SFMovieData{
         System.out.println("To search for matching actor names, enter actor KEYWORD");
         System.out.println("To finish the program, enter quit");
     }
+
+    
     /**
     * Splits the given line of a CSV file according to commas and double quotes
     * (double quotes are used to surround multi-word entries so that they may contain commas)
