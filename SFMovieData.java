@@ -50,22 +50,35 @@ public class SFMovieData{
                 
                 if (existingMovie == null) {
                     // Use the full constuctor to create a movie and add it to the MovieList
-                    
+                    if (csvMovie.get(8)!= null || csvMovie.get(8)!=""){
+                        Actor actor1 = new Actor(csvMovie.get(8));
+                    }
+                    if (csvMovie.get(9)!= null || csvMovie.get(9)!=""){
+                        Actor actor2 = new Actor(csvMovie.get(9));
+                    }
+                    if (csvMovie.get(10)!= null || csvMovie.get(10)!=""){
+                        Actor actor3 = new Actor(csvMovie.get(10));
+                    }
+                    Movie newMovie =  new Movie(csvMovie.get(0), csvMovie.get(1), csvMovie.get(6), csvMovie.get(7), 
+                    actor1, actor2, actor3);
+
+                    if(csvMovie.get(2)!= null || csvMovie.get(2)!= ""){
+                        newMovie.addLocation(csvMovie.get(2));
+                    }
+                    //add new movie object into movie list array
+                    movieDB.append(newMovie);
                 } else {
                     // add the location
-                    existingMovie.addLocation(csvMovie.get(2));
+                    if(csvMovie.get(2)!= null || csvMovie.get(2)!= ""){
+                        existingMovie.addLocation(csvMovie.get(2));
+                    }
                 }
-
-                
-
                 
             }
     } catch(FileNotFoundException e) {
         System.err.println("Error: the file "+movieFile.getAbsolutePath()+" does not exist.\n");
 		System.exit(1);
-    }
-
-        
+    }  
         
     // Start the Console Program and loop until the user quits
     Boolean userQuit = false;
