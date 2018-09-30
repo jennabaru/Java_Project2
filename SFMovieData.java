@@ -82,21 +82,21 @@ public class SFMovieData{
                             actor1, actor2, actor3);
 
                         if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
-                            System.out.printf("adding location to new movie %s\n", newMovie.title);
+                           // DBG System.out.printf("adding location to new movie %s\n", newMovie.title);
                             Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
                             newMovie.addLocation(loc);
                         }
                         //add new movie object into movie list array
-                        System.out.printf(" *** loc before add: %d\n", newMovie.location.size());
+                        // DBG System.out.printf(" *** loc before add: %d\n", newMovie.location.size());
                         movieDB.add(newMovie);
                     }
                 } else {
-                    System.out.println("    Found existing movie");
+                    // DBG System.out.println("    Found existing movie");
                     // add the location
                     if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
                         Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
                         existingMovie.addLocation(loc);
-                        System.out.printf("Adding Location to %s [%d]\n", existingMovie.title, existingMovie.location.size());
+                        // DBG System.out.printf("Adding Location to %s [%d]\n", existingMovie.title, existingMovie.location.size());
 
                     }
                 }
@@ -108,7 +108,7 @@ public class SFMovieData{
     }  
         
     // DEBUG
-    System.out.printf("There are %d entries in the database\n", movieDB.size());
+    // DBG System.out.printf("There are %d entries in the database\n", movieDB.size());
 
     // Start the Console Program and loop until the user quits
     Boolean userQuit = false;
@@ -137,7 +137,7 @@ public class SFMovieData{
                 } 
                 keywords = keywords.trim();
                 
-                System.out.printf("DEBUG searching title with [%s]\n", keywords);
+                // DBG System.out.printf("DEBUG searching title with [%s]\n", keywords);
 
                 MovieList titleResults = movieDB.getMatchingTitles(keywords);
 
@@ -167,7 +167,7 @@ public class SFMovieData{
                 keywords = keywords.trim();
 
 
-                System.out.printf("DEBUG searching actor with [%s]\n", keywords);
+                // DBG System.out.printf("DEBUG searching actor with [%s]\n", keywords);
 
                 MovieList actorResults = movieDB.getMatchingActor(keywords);
                 if (actorResults.size() > 0) {
