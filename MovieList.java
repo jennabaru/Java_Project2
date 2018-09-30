@@ -47,7 +47,7 @@ public class MovieList extends ArrayList<Movie> {
     public Movie find(Movie movie) {
 
         int i;
-        for (i=0;i< size(); i++) {
+        for (i=0;i<size(); i++) {
             if (get(i).equals(movie)) {
                 return movie;
             }

@@ -82,18 +82,22 @@ public class SFMovieData{
                             actor1, actor2, actor3);
 
                         if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
+                            System.out.printf("adding location to new movie %s\n", newMovie.title);
                             Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
-                        
                             newMovie.addLocation(loc);
                         }
                         //add new movie object into movie list array
+                        System.out.printf(" *** loc before add: %d\n", newMovie.location.size());
                         movieDB.add(newMovie);
                     }
                 } else {
+                    System.out.println("    Found existing movie");
                     // add the location
-                    if(csvMovie.get(2)!= null || csvMovie.get(2)!= ""){
+                    if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
                         Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
                         existingMovie.addLocation(loc);
+                        System.out.printf("Adding Location to %s [%d]\n", existingMovie.title, existingMovie.location.size());
+
                     }
                 }
                 
@@ -138,8 +142,11 @@ public class SFMovieData{
                 MovieList titleResults = movieDB.getMatchingTitles(keywords);
 
                 if (titleResults.size() > 0) {
-                    System.out.printf("Found %d results\n", titleResults.size());
-                    
+                    //System.out.printf("Found %d results\n", titleResults.size());
+                    for(i=0; i<titleResults.size();i++){
+                        System.out.println(titleResults.get(i).toString());
+                        System.out.println();
+                    }
                 } else {
                     System.out.println("No results, try again");
                 }
@@ -164,7 +171,10 @@ public class SFMovieData{
 
                 MovieList actorResults = movieDB.getMatchingActor(keywords);
                 if (actorResults.size() > 0) {
-                    System.out.printf("Found %d results\n", actorResults.size());
+                    // System.out.printf("Found %d results\n", actorResults.size());
+                    for (i=0; i<actorResults.size(); i++) {
+                        System.out.println(actorResults.get(i).toString());
+                    }
 
                 } else {
                     System.out.println("No results, try again");

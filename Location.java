@@ -12,4 +12,12 @@ public class Location{
             throw new IllegalArgumentException("Location is expected");
         }
     }
+
+    public String getLocation() {
+        return this.location;
+    }
+
+    public String getFunFact() {
+        return this.funFact;
+    }
 }
