@@ -76,6 +76,12 @@ public class Movie implements Comparable<Movie>{
     }
 
     public int compareTo(Movie movie) {
-        return 0;
+        if (this.year == movie.year) {
+            return 0;
+        } else if (this.year > movie.year) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }

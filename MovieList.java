@@ -1,6 +1,7 @@
 package project2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MovieList extends ArrayList<Movie> {
     
@@ -9,6 +10,9 @@ public class MovieList extends ArrayList<Movie> {
 
     public MovieList getMatchingTitles ( String keyword ) {
 
+        if (keyword == null || keyword.length() == 0) {
+            return null;
+        }
         // Search the the list of movies and see what contains the keywords
         MovieList results = new MovieList();
         int i = 0;
@@ -18,11 +22,18 @@ public class MovieList extends ArrayList<Movie> {
                 results.add(get(i));
             }
         }
+        
+        Collections.sort(results);
         return results;
         
     }
 
     public MovieList getMatchingActor ( String keyword ) {
+
+        if (keyword == null || keyword.length() == 0) {
+            return null;
+        }
+
         MovieList results = new MovieList();
         int i = 0;
 
@@ -39,6 +50,8 @@ public class MovieList extends ArrayList<Movie> {
                 results.add(get(i));
             }
         }
+
+        Collections.sort(results);
         return results;
     }
 
