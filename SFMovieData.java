@@ -33,7 +33,6 @@ public class SFMovieData{
             while (movies.hasNextLine()) {
                 String movieString = movies.nextLine();
                 csvMovie = splitCSVLine(movieString);
-
           
                 if (csvMovie == null){
                     System.err.println("Error: movie database is empty");
@@ -142,14 +141,14 @@ public class SFMovieData{
 
                 MovieList titleResults = movieDB.getMatchingTitles(keywords);
 
-                if (titleResults.size() > 0) {
+                if(titleResults==null){
+                    System.out.println("No results, try again");
+                }else{
                     //System.out.printf("Found %d results\n", titleResults.size());
                     for(i=0; i<titleResults.size();i++){
                         System.out.println(titleResults.get(i).toString());
                         System.out.println();
                     }
-                } else {
-                    System.out.println("No results, try again");
                 }
 
                 System.out.println("Enter your search query: ");
@@ -172,14 +171,13 @@ public class SFMovieData{
                 // DBG System.out.printf("DEBUG searching actor with [%s]\n", keywords);
 
                 MovieList actorResults = movieDB.getMatchingActor(keywords);
-                if (actorResults.size() > 0) {
+                if(actorResults== null){
+                    System.out.println("No results, try again");
+                }else {
                     // System.out.printf("Found %d results\n", actorResults.size());
                     for (i=0; i<actorResults.size(); i++) {
                         System.out.println(actorResults.get(i).toString());
                     }
-
-                } else {
-                    System.out.println("No results, try again");
                 }
 
                 System.out.println("Enter your search query: ");

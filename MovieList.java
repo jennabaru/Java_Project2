@@ -22,7 +22,9 @@ public class MovieList extends ArrayList<Movie> {
                 results.add(get(i));
             }
         }
-        
+        if(results.size()==0){
+            return null;
+        }
         Collections.sort(results);
         return results;
         
@@ -50,7 +52,9 @@ public class MovieList extends ArrayList<Movie> {
                 results.add(get(i));
             }
         }
-
+        if(results.size()==0){
+            return null;
+        }
         Collections.sort(results);
         return results;
     }
