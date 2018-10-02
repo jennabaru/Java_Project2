@@ -53,31 +53,88 @@ public class Movie implements Comparable<Movie>{
     }
 
     public String toString() {
-        String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t: %s\nstarring\t: %s , %s , %s\nfilmed on location at:\n",
+        System.out.println();
+        if(actor2.name()!=null && actor3.name()!= null){
+
+            String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t\t: %s\nstarring\t: %s, %s, %s\nfilmed on location at:\n",
             title, year, director, writer, actor1.name(), actor2.name(), actor3.name());
 
-        String locations = "";
+            String locations = "";
 
-        int i=0;
-        for(i=0; i<location.size(); i++) {
-            locations = locations.concat(String.format("%s (%s)\n", location.get(i).getLocation(), location.get(i).getFunFact()));
+            int i=0;
+            if (location.get(i).getFunFact()!= null){
+                for(i=0; i<location.size(); i++) {
+                    locations = locations.concat(String.format("\t%s (%s)\n", location.get(i).getLocation(), location.get(i).getFunFact()));
+                }
+            }else{
+                for(i=0; i<location.size(); i++) {
+                    locations = locations.concat(String.format("\t%s\n", location.get(i).getLocation()));
+                }
+            }
+
+            movieOutput = movieOutput.concat(locations);
+            return movieOutput;
+
+        }else if(actor2.name()!=null){
+
+            String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t\t: %s\nstarring\t: %s, %s\nfilmed on location at:\n",
+            title, year, director, writer, actor1.name(), actor2.name());
+
+            String locations = "";
+
+            int i=0;
+            if (location.get(i).getFunFact()!= null){
+                for(i=0; i<location.size(); i++) {
+                    locations = locations.concat(String.format("\t%s (%s)\n", location.get(i).getLocation(), location.get(i).getFunFact()));
+                }
+            }else{
+                for(i=0; i<location.size(); i++) {
+                    locations = locations.concat(String.format("\t%s\n", location.get(i).getLocation()));
+                }
+            }
+
+            movieOutput = movieOutput.concat(locations);
+            return movieOutput;
+
+
+        }else{
+            String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t\t: %s\nstarring\t: %s\nfilmed on location at:\n",
+            title, year, director, writer, actor1.name());
+
+            String locations = "";
+
+            int i=0;
+            if (location.get(i).getFunFact()!= null){
+                for(i=0; i<location.size(); i++) {
+                    locations = locations.concat(String.format("\t%s (%s)\n", location.get(i).getLocation(), location.get(i).getFunFact()));
+                }
+            }else{
+                for(i=0; i<location.size(); i++) {
+                    locations = locations.concat(String.format("\t%s\n", location.get(i).getLocation()));
+                }
+            }
+
+            movieOutput = movieOutput.concat(locations);
+            return movieOutput;
+
         }
-
-        movieOutput = movieOutput.concat(locations);
-
-        return movieOutput;
+        //return movieOutput;
     }
 
     public Boolean equals(Movie movie) {
-        if (this.year == movie.year && this.title.equals(movie.title)) {
+        //if (this.year == movie.year && this.title.equalsIgnoreCase(movie.title)) {
+       //     return true;
+        //}
+        //return false;
+        if(movie.compareTo(this)==0){
             return true;
         }
         return false;
     }
-
+    @Override
     public int compareTo(Movie movie) {
         if (this.year == movie.year) {
-            return 0;
+            return this.title.toLowerCase().compareTo(movie.title.toLowerCase());
         } else if (this.year > movie.year) {
             return 1;
         } else {

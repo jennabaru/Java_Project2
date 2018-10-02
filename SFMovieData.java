@@ -51,7 +51,7 @@ public class SFMovieData{
 
                 // create a movie 
                 if (csvMovie.size() < 9) {
-                    System.out.printf("Bad CSV Entry, skipping\n");
+                    //DEBUG: System.out.printf("Bad CSV Entry, skipping\n");
                     continue;
                 }
 
@@ -118,6 +118,7 @@ public class SFMovieData{
        Scanner cmdScanner = new Scanner (System.in);
        
        System.out.println("Enter your search query: ");
+       System.out.println();
 
        while(cmdScanner.hasNextLine()){
            String cmd[] = cmdScanner.nextLine().trim().split(" ");
@@ -152,6 +153,7 @@ public class SFMovieData{
                 }
 
                 System.out.println("Enter your search query: ");
+                System.out.println();
 
            } else if (cmd[0].equalsIgnoreCase("actor")) {  
                 //search for actor keyword
@@ -194,9 +196,13 @@ public class SFMovieData{
 
     public static void welcomeBanner(){
         System.out.println("Search the database by matching keywords to titles or actor names.");
-        System.out.println("To search for matching titles, enter title KEYWORD");
-        System.out.println("To search for matching actor names, enter actor KEYWORD");
-        System.out.println("To finish the program, enter quit");
+        System.out.println("\tTo search for matching titles, enter title KEYWORD");
+        System.out.println("\tTo search for matching actor names, enter actor KEYWORD");
+        System.out.println("\tTo finish the program, enter quit");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
     }
 
     
