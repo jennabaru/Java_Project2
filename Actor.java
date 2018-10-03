@@ -14,7 +14,7 @@ public class Actor{
     public Actor(String actorName) throws IllegalArgumentException {
         this.actorName = actorName;
 
-        //throw exception is actorName input is invalid
+        //throw exception if actorName input is invalid
         if(actorName == null|| actorName.length()==0 ){
             throw new IllegalArgumentException("Actor name is expected");
         }

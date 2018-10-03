@@ -1,6 +1,6 @@
 package project2;
 /**
-* This class creates a location object with an
+* This class creates a location object with a
 * string location and string funFact input.
 * @author Jenna Baruch * @version 10/02/2018
 */
@@ -12,13 +12,13 @@ public class Location{
  * Location class constructor
  * @param location location to be set
  * @param funFact funFact to be set
- * @throws IllegalArgumentException if location is null of empty
+ * @throws IllegalArgumentException if location is null or empty
  */
     public Location(String location, String funFact) throws IllegalArgumentException{
         this.location=location;
         this.funFact=funFact;
 
-        //throw exception is location input is invalid
+        //throw exception if location input is invalid
         if(this.location == null || this.location.length()==0){
             throw new IllegalArgumentException("Location is expected");
         }

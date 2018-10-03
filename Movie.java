@@ -45,7 +45,7 @@ public class Movie implements Comparable<Movie>{
  * @param writer string to be set as writer
  * @param actor1 actor object to be set as actor1
  * @param actor2 actor object to be set as actor2
- * @param actor3 actor object to be set as actor
+ * @param actor3 actor object to be set as actor3
  * @throws IllegalArgumentException if title, year, or actor1 is invalid
  */
     public Movie(String title, int year, String director, String writer, 
@@ -74,7 +74,7 @@ public class Movie implements Comparable<Movie>{
 /**
  * This method adds location to list of locations for current movie object
  * @param loc Location object
- * @throws IllegalArgumentException if loc is null
+ * @throws IllegalArgumentException if location is null
  */
     public void addLocation(Location loc) throws IllegalArgumentException{
         //throws exception if location is null
@@ -86,7 +86,7 @@ public class Movie implements Comparable<Movie>{
     }
 /**
  * This method overrides the toString method to print movie objects in
- * a desired output style.
+ * a desired display style.
  * @return string movieOutput
  */
     @Override
@@ -94,7 +94,7 @@ public class Movie implements Comparable<Movie>{
         System.out.println();
         //if there are 3 actors in movie
         if(actor2!= null && actor3!= null){
-
+            //format movie output with 3 actors
             String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter  \t: %s\nstarring\t: %s, %s, %s\nfilmed on location at:\n",
             title, year, director, writer, actor1.name(), actor2.name(), actor3.name());
 
@@ -117,9 +117,9 @@ public class Movie implements Comparable<Movie>{
             return movieOutput;
 
         }
-        //if there are 2 actore in a movie
+        //if there are 2 actors in a movie
         else if(actor2!=null){
-
+            //format movie output with 2 actors
             String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t\t: %s\nstarring\t: %s, %s\nfilmed on location at:\n",
             title, year, director, writer, actor1.name(), actor2.name());
 
@@ -145,6 +145,7 @@ public class Movie implements Comparable<Movie>{
         }
         //if there is only 1 actor in a movie
         else{
+            //format movie output with 1 actor
             String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t\t: %s\nstarring\t: %s\nfilmed on location at:\n",
             title, year, director, writer, actor1.name());
 
@@ -170,7 +171,7 @@ public class Movie implements Comparable<Movie>{
         }
     }
 /**
- * This method overrides the equals method and calls
+ * This method calls
  * compareTo to see if two movie objects are equal.
  * @param movie movie object
  * @return true if movies are the same, false if they are different
@@ -185,7 +186,7 @@ public class Movie implements Comparable<Movie>{
  * This method overrides the compareTo method and
  * compares two movie objects by year and title to
  * see if they are the same.
- * @return 0 if movies are same, 1 if movie year is greater
+ * @return int: 0 if movies are same, 1 if movie year is greater
  * -1 if movie year is less 
  */
     @Override
