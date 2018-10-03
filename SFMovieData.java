@@ -99,7 +99,7 @@ public class SFMovieData{
 
                     }
                 }
-            movies.close();  
+            //movies.close();  
             }
     } catch(FileNotFoundException e) {
         System.err.println("Error: the file "+movieFile.getAbsolutePath()+" does not exist.\n");
@@ -189,14 +189,22 @@ public class SFMovieData{
                 System.out.println("Enter your search query: ");
                 System.out.println();
 
-           } else {
+           } //else if(!cmd[0].equalsIgnoreCase("title") && !cmd[0].equalsIgnoreCase("actor") && !cmd[0].equalsIgnoreCase("quit")){
+               // System.out.println();
+                //System.err.println("Usage Error: program expects title keyword, actor keyword, or quit. Try again");
+                //System.out.println();
+                //System.out.println();
+                //break;
+
+           //}
+           else {
                if (cmd[0].equalsIgnoreCase("quit")){
                    userQuit=true;
                    break;
                }
            }
        }
-       cmdScanner.close();
+       //cmdScanner.close();
     }
 }
 

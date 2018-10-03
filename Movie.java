@@ -56,7 +56,7 @@ public class Movie implements Comparable<Movie>{
         System.out.println();
         if(actor2!= null && actor3!= null){
 
-            String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t\t: %s\nstarring\t: %s, %s, %s\nfilmed on location at:\n",
+            String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter  \t: %s\nstarring\t: %s, %s, %s\nfilmed on location at:\n",
             title, year, director, writer, actor1.name(), actor2.name(), actor3.name());
 
             String locations = "";
