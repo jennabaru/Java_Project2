@@ -1,5 +1,7 @@
 package project2;
 
+import java.util.ArrayList;
+import java.util.Collections;
 /**
 * This class extends ArrayaList<Movie>. It has methods to search
 * for matching keywords as well as a method to find a movie
@@ -7,10 +9,6 @@ package project2;
 *
 * @author Jenna Baruch * @version 10/02/2018
 */
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class MovieList extends ArrayList<Movie> {
     /**
      * Default constructor

@@ -1,5 +1,10 @@
 package project2;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;   
+import java.util.Arrays;
 /**
 * This class houses the main program. Here the user interacts
 * with the program to enter title and actor keywords. A list of
@@ -9,13 +14,6 @@ package project2;
 *
 * @author Jenna Baruch * @version 10/02/2018
 */
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;   
-import java.util.Arrays;
-
 public class SFMovieData{
     /**
      * The main method checks for correct command line input and
