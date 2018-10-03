@@ -1,5 +1,15 @@
 package project2;
 
+/**
+* This class houses the main program. Here the user interacts
+* with the program to enter title and actor keywords. A list of
+* the movies with those keywords are then displayed to the user. 
+* This is run on a loop until the user quits the program. This class
+* also opens the file to read in data.
+*
+* @author Jenna Baruch * @version 10/02/2018
+*/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,11 +17,16 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 public class SFMovieData{
-
+    /**
+     * The main method checks for correct command line input and
+     * creates new movie objects for data in text file. Also uses scanner
+     * to ask user for keywords, and searches database and prints movie objects.
+     * @param args command line data file input
+     */
     public static void main(String[] args){
 
         File movieFile = null;
-
+        //if there is no command line input
         if (args.length == 0){
             System.err.println("Usage Error: The name of a file is expected as the argument");
             System.exit(1);
@@ -21,47 +36,37 @@ public class SFMovieData{
         MovieList movieDB = new MovieList();
         
         try {
-
             movieFile = new File(args[0]);
             Scanner movies = new Scanner(movieFile);
 
             // Skip past the headers in the CSV file
             movies.nextLine();
-            
             ArrayList<String> csvMovie = null; 
 
             while (movies.hasNextLine()) {
                 String movieString = movies.nextLine();
                 csvMovie = splitCSVLine(movieString);
-          
+                
+                //if data file is empty
                 if (csvMovie == null){
                     System.err.println("Error: movie database is empty");
                     System.exit(1);
                 }
-
-                // DEBUG - REMOVE LATER
-                // System.out.printf("read: %s\n", movie);
-                //System.out.printf("The Title is %s\n", csvMovies.get(0));
-
-                // for each CSV line we need to:
-                // See if there is already a Movie in the MovieList class that has the same title and year via compariable interface
-                // If so, use the addLocation method to add the location.
-                // Otherwise, create a Movie object and add it to the MovieList
-
                 // create a movie 
                 if (csvMovie.size() < 9) {
-                    //DEBUG: System.out.printf("Bad CSV Entry, skipping\n");
                     continue;
                 }
 
+                //call 2 param constructor to create new movie
                 Movie movie = new Movie(csvMovie.get(0), Integer.parseInt(csvMovie.get(1)));
                 Movie existingMovie = movieDB.find(movie);
                 
+                //initialize actor objects
                 Actor actor1 = null;
                 Actor actor2 = null;
                 Actor actor3 = null;
 
-                
+                //if movie does not exist
                 if (existingMovie == null) {
                     // Use the full constuctor to create a movie and add it to the MovieList
                     if (csvMovie.size() >= 9 && csvMovie.get(8).length() > 0){
@@ -70,7 +75,6 @@ public class SFMovieData{
                     if (csvMovie.size() >= 10  && csvMovie.get(9).length() > 0 ){
                         actor2 = new Actor(csvMovie.get(9));
                     }
-                    
                     if (csvMovie.size() >= 11 && csvMovie.get(10).length() > 0) {
                         actor3 = new Actor(csvMovie.get(10));
                     }
@@ -79,38 +83,31 @@ public class SFMovieData{
                     if (actor1 != null) {
                         Movie newMovie =  new Movie(csvMovie.get(0), Integer.parseInt(csvMovie.get(1)), csvMovie.get(6), csvMovie.get(7), 
                             actor1, actor2, actor3);
-
+                        //call location constructor
                         if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
-                           // DBG System.out.printf("adding location to new movie %s\n", newMovie.title);
                             Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
                             newMovie.addLocation(loc);
                         }
-                        //add new movie object into movie list array
-                        // DBG System.out.printf(" *** loc before add: %d\n", newMovie.location.size());
+                        //add new movie to the databasw
                         movieDB.add(newMovie);
                     }
                 } else {
-                    // DBG System.out.println("    Found existing movie");
                     // add the location
                     if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
                         Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
                         existingMovie.addLocation(loc);
-                        // DBG System.out.printf("Adding Location to %s [%d]\n", existingMovie.title, existingMovie.location.size());
 
                     }
                 }
-            //movies.close();  
             }
-    } catch(FileNotFoundException e) {
-        System.err.println("Error: the file "+movieFile.getAbsolutePath()+" does not exist.\n");
-		System.exit(1);
-    }  
-        
-    // DEBUG
-    // DBG System.out.printf("There are %d entries in the database\n", movieDB.size());
-
+        //catach file not found exception
+        } catch(FileNotFoundException e) {
+            System.err.println("Error: the file "+movieFile.getAbsolutePath()+" does not exist.\n");
+		    System.exit(1);
+        }  
     // Start the Console Program and loop until the user quits
     Boolean userQuit = false;
+    //call method to print welcome message
     welcomeBanner();
 
     while(!userQuit){
@@ -121,6 +118,7 @@ public class SFMovieData{
 
        while(cmdScanner.hasNextLine()){
            String cmd[] = cmdScanner.nextLine().trim().split(" ");
+           //if user enters incorrect input
            if(cmd.length == 0 || (cmd.length==1 && !cmd[0].equalsIgnoreCase("quit"))){
                System.out.println();
                System.err.println("Usage Error: program expects title keyword, actor keyword, or quit. Try again");
@@ -129,9 +127,7 @@ public class SFMovieData{
                break;
 
            } else if (cmd[0].equalsIgnoreCase("title")) {
-                //SEARCH FOR TITLE KEYWORD
-                // DEBUG System.out.println("Searching title");
-                
+                //Search for title keyword
                 String keywords = "";
                 int i = 0;
                 for(i=1; i<cmd.length; i++) {
@@ -139,18 +135,17 @@ public class SFMovieData{
                     keywords = keywords.concat(" ");
                 } 
                 keywords = keywords.trim();
-                
-                // DBG System.out.printf("DEBUG searching title with [%s]\n", keywords);
-
                 MovieList titleResults = movieDB.getMatchingTitles(keywords);
 
+                //if there are no results
                 if(titleResults==null){
                     System.out.println();
                     System.out.println("No results, try again");
                     System.out.println();
                     System.out.println();
-                }else{
-                    //System.out.printf("Found %d results\n", titleResults.size());
+                }
+                //call toString method to print results
+                else{
                     for(i=0; i<titleResults.size();i++){
                         System.out.println(titleResults.get(i).toString());
                         System.out.println();
@@ -161,10 +156,7 @@ public class SFMovieData{
                 System.out.println();
 
            } else if (cmd[0].equalsIgnoreCase("actor")) {  
-                //search for actor keyword
-                // DEBUG System.out.println("Searching actor"); 
-
-
+                //Search for actor keyword
                 String keywords = "";
                 int i = 0;
                 for(i=1; i<cmd.length; i++) {
@@ -173,14 +165,13 @@ public class SFMovieData{
                 } 
                 keywords = keywords.trim();
 
-
-                // DBG System.out.printf("DEBUG searching actor with [%s]\n", keywords);
-
                 MovieList actorResults = movieDB.getMatchingActor(keywords);
+                //if there are no results
                 if(actorResults== null){
                     System.out.println("No results, try again");
-                }else {
-                    // System.out.printf("Found %d results\n", actorResults.size());
+                }
+                //call toString method to display results as output
+                else {
                     for (i=0; i<actorResults.size(); i++) {
                         System.out.println(actorResults.get(i).toString());
                     }
@@ -188,26 +179,20 @@ public class SFMovieData{
 
                 System.out.println("Enter your search query: ");
                 System.out.println();
-
-           } //else if(!cmd[0].equalsIgnoreCase("title") && !cmd[0].equalsIgnoreCase("actor") && !cmd[0].equalsIgnoreCase("quit")){
-               // System.out.println();
-                //System.err.println("Usage Error: program expects title keyword, actor keyword, or quit. Try again");
-                //System.out.println();
-                //System.out.println();
-                //break;
-
-           //}
+           }
            else {
-               if (cmd[0].equalsIgnoreCase("quit")){
+                //if user eneters quit
+                if (cmd[0].equalsIgnoreCase("quit")){
                    userQuit=true;
                    break;
                }
            }
        }
-       //cmdScanner.close();
     }
 }
-
+/**
+ * Void method prints program welcome output.
+ */
     public static void welcomeBanner(){
         System.out.println("Search the database by matching keywords to titles or actor names.");
         System.out.println("\tTo search for matching titles, enter title KEYWORD");
