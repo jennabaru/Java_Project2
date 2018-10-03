@@ -99,7 +99,7 @@ public class SFMovieData{
 
                     }
                 }
-                
+            movies.close();  
             }
     } catch(FileNotFoundException e) {
         System.err.println("Error: the file "+movieFile.getAbsolutePath()+" does not exist.\n");
@@ -196,6 +196,7 @@ public class SFMovieData{
                }
            }
        }
+       cmdScanner.close();
     }
 }
 
