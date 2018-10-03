@@ -75,7 +75,7 @@ public class SFMovieData{
                         actor3 = new Actor(csvMovie.get(10));
                     }
 
-                    // If the first actor is blank, skip addig the movie
+                    // If the first actor is blank, skip adding the movie
                     if (actor1 != null) {
                         Movie newMovie =  new Movie(csvMovie.get(0), Integer.parseInt(csvMovie.get(1)), csvMovie.get(6), csvMovie.get(7), 
                             actor1, actor2, actor3);
@@ -122,7 +122,10 @@ public class SFMovieData{
        while(cmdScanner.hasNextLine()){
            String cmd[] = cmdScanner.nextLine().trim().split(" ");
            if(cmd.length == 0 || (cmd.length==1 && !cmd[0].equalsIgnoreCase("quit"))){
-               System.err.println("Usage Error: program expects title keyword, actor keyword, or quit");
+               System.out.println();
+               System.err.println("Usage Error: program expects title keyword, actor keyword, or quit. Try again");
+               System.out.println();
+               System.out.println();
                break;
 
            } else if (cmd[0].equalsIgnoreCase("title")) {
@@ -142,7 +145,10 @@ public class SFMovieData{
                 MovieList titleResults = movieDB.getMatchingTitles(keywords);
 
                 if(titleResults==null){
+                    System.out.println();
                     System.out.println("No results, try again");
+                    System.out.println();
+                    System.out.println();
                 }else{
                     //System.out.printf("Found %d results\n", titleResults.size());
                     for(i=0; i<titleResults.size();i++){
@@ -181,6 +187,7 @@ public class SFMovieData{
                 }
 
                 System.out.println("Enter your search query: ");
+                System.out.println();
 
            } else {
                if (cmd[0].equalsIgnoreCase("quit")){

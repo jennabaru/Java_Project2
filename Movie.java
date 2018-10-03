@@ -54,7 +54,7 @@ public class Movie implements Comparable<Movie>{
 
     public String toString() {
         System.out.println();
-        if(actor2.name()!= null && actor3.name()!= null){
+        if(actor2!= null && actor3!= null){
 
             String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t\t: %s\nstarring\t: %s, %s, %s\nfilmed on location at:\n",
             title, year, director, writer, actor1.name(), actor2.name(), actor3.name());
@@ -62,12 +62,10 @@ public class Movie implements Comparable<Movie>{
             String locations = "";
 
             int i=0;
-            if (location.get(i).getFunFact()!= null){
-                for(i=0; i<location.size(); i++) {
+            for(i=0;i<location.size(); i++){
+                if(location.get(i).getFunFact()!=null && (!(location.get(i).getFunFact().isEmpty()))){
                     locations = locations.concat(String.format("\t%s (%s)\n", location.get(i).getLocation(), location.get(i).getFunFact()));
-                }
-            }else{
-                for(i=0; i<location.size(); i++) {
+                }else{
                     locations = locations.concat(String.format("\t%s\n", location.get(i).getLocation()));
                 }
             }
@@ -75,7 +73,7 @@ public class Movie implements Comparable<Movie>{
             movieOutput = movieOutput.concat(locations);
             return movieOutput;
 
-        }else if(actor2.name()!=null){
+        }else if(actor2!=null){
 
             String movieOutput = String.format("%s (%d) \n------------------------------------ \ndirector\t: %s\nwriter\t\t: %s\nstarring\t: %s, %s\nfilmed on location at:\n",
             title, year, director, writer, actor1.name(), actor2.name());
@@ -83,12 +81,10 @@ public class Movie implements Comparable<Movie>{
             String locations = "";
 
             int i=0;
-            if (location.get(i).getFunFact()!= null){
-                for(i=0; i<location.size(); i++) {
+            for(i=0;i<location.size(); i++){
+                if(location.size()==1 && location.get(i).getFunFact()!= null && (!(location.get(i).getFunFact().isEmpty()))){
                     locations = locations.concat(String.format("\t%s (%s)\n", location.get(i).getLocation(), location.get(i).getFunFact()));
-                }
-            }else{
-                for(i=0; i<location.size(); i++) {
+                }else{
                     locations = locations.concat(String.format("\t%s\n", location.get(i).getLocation()));
                 }
             }
@@ -104,7 +100,7 @@ public class Movie implements Comparable<Movie>{
             String locations = "";
 
             int i=0;
-            if (location.get(i).getFunFact()!= null){
+            if (location.get(i).getFunFact()!= null && (!(location.get(i).getFunFact().isEmpty()))){
                 for(i=0; i<location.size(); i++) {
                     locations = locations.concat(String.format("\t%s (%s)\n", location.get(i).getLocation(), location.get(i).getFunFact()));
                 }
