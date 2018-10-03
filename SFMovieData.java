@@ -19,9 +19,9 @@ import java.util.Arrays;
 public class SFMovieData{
     /**
      * The main method checks for correct command line input and
-     * creates new movie objects for data in text file. Also uses scanner
-     * to ask user for keywords, and searches database and prints movie objects.
-     * @param args command line data file input
+     * creates new movie objects for data in text file. Uses scanner
+     * to ask user for keywords, searches database, and prints movie objects.
+     * @param args command line argument with data file input
      */
     public static void main(String[] args){
 
@@ -59,6 +59,7 @@ public class SFMovieData{
 
                 //call 2 param constructor to create new movie
                 Movie movie = new Movie(csvMovie.get(0), Integer.parseInt(csvMovie.get(1)));
+                //check to see if movie already exists
                 Movie existingMovie = movieDB.find(movie);
                 
                 //initialize actor objects
@@ -88,11 +89,11 @@ public class SFMovieData{
                             Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
                             newMovie.addLocation(loc);
                         }
-                        //add new movie to the databasw
+                        //add new movie to the database
                         movieDB.add(newMovie);
                     }
                 } else {
-                    // add the location
+                    // add the new location to the existing movie object
                     if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
                         Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
                         existingMovie.addLocation(loc);
@@ -100,7 +101,7 @@ public class SFMovieData{
                     }
                 }
             }
-        //catach file not found exception
+        //catch file not found exception
         } catch(FileNotFoundException e) {
             System.err.println("Error: the file "+movieFile.getAbsolutePath()+" does not exist.\n");
 		    System.exit(1);
@@ -144,7 +145,7 @@ public class SFMovieData{
                     System.out.println();
                     System.out.println();
                 }
-                //call toString method to print results
+                //if there are results, call toString method to print
                 else{
                     for(i=0; i<titleResults.size();i++){
                         System.out.println(titleResults.get(i).toString());
