@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /**
 * This class implements the comparable interface and
 * provides parameters to create movie objects.
-* It also has addLocation, toString, equals, and compareTo
+* It has addLocation, toString, equals, and compareTo
 * methods.
 * @author Jenna Baruch * @version 10/02/2018
 */
