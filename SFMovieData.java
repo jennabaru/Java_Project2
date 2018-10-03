@@ -82,15 +82,18 @@ public class SFMovieData{
 
                     // If the first actor is blank, skip adding the movie
                     if (actor1 != null) {
-                        Movie newMovie =  new Movie(csvMovie.get(0), Integer.parseInt(csvMovie.get(1)), csvMovie.get(6), csvMovie.get(7), 
-                            actor1, actor2, actor3);
-                        //call location constructor
-                        if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
-                            Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
-                            newMovie.addLocation(loc);
-                        }
+                        if(csvMovie.get(2)!=null && !csvMovie.get(2).equals("")){
+                            Movie newMovie =  new Movie(csvMovie.get(0), Integer.parseInt(csvMovie.get(1)), csvMovie.get(6), csvMovie.get(7), 
+                                actor1, actor2, actor3);
+                            //call location constructor
+                            if(csvMovie.get(2)!= null && csvMovie.get(2).length() > 0) {
+                                Location loc = new Location(csvMovie.get(2), csvMovie.get(3));
+                                newMovie.addLocation(loc);
+                            }
                         //add new movie to the database
-                        movieDB.add(newMovie);
+                        movieDB.add(newMovie);  
+                        }
+                        
                     }
                 } else {
                     // add the new location to the existing movie object
